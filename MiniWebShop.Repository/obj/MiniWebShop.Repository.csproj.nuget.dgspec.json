@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop\\MiniWebShop.csproj": {}
+    "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop.Repository\\MiniWebShop.Repository.csproj": {}
   },
   "projects": {
-    "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop\\MiniWebShop.csproj": {
+    "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop.Repository\\MiniWebShop.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop\\MiniWebShop.csproj",
-        "projectName": "MiniWebShop",
-        "projectPath": "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop\\MiniWebShop.csproj",
+        "projectUniqueName": "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop.Repository\\MiniWebShop.Repository.csproj",
+        "projectName": "MiniWebShop.Repository",
+        "projectPath": "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop.Repository\\MiniWebShop.Repository.csproj",
         "packagesPath": "C:\\Users\\forum\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop\\obj\\",
+        "outputPath": "C:\\Users\\forum\\Desktop\\Pristupni zadatak KING_ICT\\Mini_webshop_KING_ICT\\MiniWebShop.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -51,20 +51,6 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[5.0.8, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[5.0.8, )"
-            },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[5.0.2, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[5.6.3, )"
             }
           },
           "imports": [
@@ -78,9 +64,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
