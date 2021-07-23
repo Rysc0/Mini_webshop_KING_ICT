@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace MiniWebShop.Models
 {
-    public class ProizvodDbContext :DbContext
+    public class NarudzbaDbContext :DbContext
     {
-        public DbSet<Proizvod> Proizvod { get; set; }
+        public DbSet<Narudzba> Narudzba { get; set; }
 
-        public ProizvodDbContext(DbContextOptions<ProizvodDbContext> options) : base(options)
+        public NarudzbaDbContext(DbContextOptions<NarudzbaDbContext> options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Proizvod>()
-                .ToTable("Proizvod");
+            modelBuilder.Entity<Narudzba>()
+                .ToTable("Narudzba");
         }
     }
 }

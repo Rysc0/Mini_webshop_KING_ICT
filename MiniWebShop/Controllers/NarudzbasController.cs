@@ -11,47 +11,47 @@ namespace MiniWebShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProizvodsController : ControllerBase
+    public class NarudzbasController : ControllerBase
     {
-        private readonly ProizvodDbContext _context;
+        private readonly NarudzbaDbContext _context;
 
-        public ProizvodsController(ProizvodDbContext context)
+        public NarudzbasController(NarudzbaDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Proizvods
+        // GET: api/Narudzbas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Proizvod>>> GetProizvod()
+        public async Task<ActionResult<IEnumerable<Narudzba>>> GetNarudzba()
         {
-            return await _context.Proizvod.ToListAsync();
+            return await _context.Narudzba.ToListAsync();
         }
 
-        // GET: api/Proizvods/5
+        // GET: api/Narudzbas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Proizvod>> GetProizvod(int id)
+        public async Task<ActionResult<Narudzba>> GetNarudzba(int id)
         {
-            var proizvod = await _context.Proizvod.FindAsync(id);
+            var narudzba = await _context.Narudzba.FindAsync(id);
 
-            if (proizvod == null)
+            if (narudzba == null)
             {
                 return NotFound();
             }
 
-            return proizvod;
+            return narudzba;
         }
 
-        // PUT: api/Proizvods/5
+        // PUT: api/Narudzbas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProizvod(int id, Proizvod proizvod)
+        public async Task<IActionResult> PutNarudzba(int id, Narudzba narudzba)
         {
-            if (id != proizvod.ID)
+            if (id != narudzba.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(proizvod).State = EntityState.Modified;
+            _context.Entry(narudzba).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace MiniWebShop.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProizvodExists(id))
+                if (!NarudzbaExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace MiniWebShop.Controllers
             return NoContent();
         }
 
-        // POST: api/Proizvods
+        // POST: api/Narudzbas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Proizvod>> PostProizvod(Proizvod proizvod)
+        public async Task<ActionResult<Narudzba>> PostNarudzba(Narudzba narudzba)
         {
-            _context.Proizvod.Add(proizvod);
+            _context.Narudzba.Add(narudzba);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProizvod", new { id = proizvod.ID }, proizvod);
+            return CreatedAtAction("GetNarudzba", new { id = narudzba.ID }, narudzba);
         }
 
-        // DELETE: api/Proizvods/5
+        // DELETE: api/Narudzbas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProizvod(int id)
+        public async Task<IActionResult> DeleteNarudzba(int id)
         {
-            var proizvod = await _context.Proizvod.FindAsync(id);
-            if (proizvod == null)
+            var narudzba = await _context.Narudzba.FindAsync(id);
+            if (narudzba == null)
             {
                 return NotFound();
             }
 
-            _context.Proizvod.Remove(proizvod);
+            _context.Narudzba.Remove(narudzba);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProizvodExists(int id)
+        private bool NarudzbaExists(int id)
         {
-            return _context.Proizvod.Any(e => e.ID == id);
+            return _context.Narudzba.Any(e => e.ID == id);
         }
     }
 }
