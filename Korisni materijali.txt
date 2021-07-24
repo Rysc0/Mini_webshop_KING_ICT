@@ -1,0 +1,13 @@
+Izrada web api-ja:
+http://codingsonata.com/build-restful-apis-using-asp-net-core-and-entity-framework-core/
+
+SQL connection string format:
+https://www.connectionstrings.com/sql-server-2019/
+
+SQL float se mapira kao double u C#-u:
+https://www.codeproject.com/Questions/5271364/Unable-to-cast-object-of-type-system-double-to-typ
+
+CORS 
+https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0 (rješilo problem)
+https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe (daje alternativna rješenja za javascript)
+
