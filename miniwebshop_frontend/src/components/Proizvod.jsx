@@ -1,6 +1,6 @@
 import React from "react"
 
-export const Proizvod = ({id, naziv, opis, cijena, kolicina, brand_id}) => {
+export const Proizvod = ({id, naziv, opis, cijena, kolicina, brand_ID}) => {
     return (
         <tr>
             <th>{id}</th>
@@ -8,7 +8,7 @@ export const Proizvod = ({id, naziv, opis, cijena, kolicina, brand_id}) => {
             <th>{opis}</th>
             <th>{cijena}</th>
             <th>{kolicina}</th>
-            <th>{brand_id}</th>
+            <th>{brand_ID}</th>
         </tr>
     );
 };
