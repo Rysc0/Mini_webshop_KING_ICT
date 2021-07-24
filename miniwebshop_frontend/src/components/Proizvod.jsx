@@ -2,7 +2,7 @@ import React from "react"
 
 export const Proizvod = ({id, naziv, opis, cijena, kolicina, brand_ID}) => {
     return (
-        <tr>
+        <tr className="red">
             <th>{id}</th>
             <th>{naziv}</th>
             <th>{opis}</th>

@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.tablica th{
+    border: 1px solid black;
+
+}
+
+.tablica thead{
+    background-color: rgb(243, 226, 129);
+}
+
+.tablica tbody tr:nth-child(even){
+    background-color: rgb(243, 226, 129);
+}

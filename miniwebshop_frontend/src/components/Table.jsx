@@ -2,7 +2,7 @@ import React from "react"
 
 export const Table = ({children}) =>{
     return (
-        <table>
+        <table className="tablica">
             <thead>
                 <tr>
                     <th>Id</th>
