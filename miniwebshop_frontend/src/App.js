@@ -14,9 +14,9 @@ function App() {
     const items = [];
 
 
-    useEffect(() => {
-       setPodaci(items);        
-    }, []);
+    // useEffect(() => {
+    //    setPodaci(items);        
+    // }, []);
         
     const handleKosarica = (event) => {
         const value = parseInt(event.currentTarget.value);
@@ -25,7 +25,7 @@ function App() {
         if(novi_data.kolicina > 0){
             items.push(novi_data);
             // radi
-            // setPodaci(items);
+            setPodaci(items);
             // podaci.push(novi_data);
         }
         else console.log("OUT OF STOCK: ", {novi_data});
