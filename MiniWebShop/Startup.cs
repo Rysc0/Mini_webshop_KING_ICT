@@ -37,6 +37,7 @@ namespace MiniWebShop
                         builder.WithOrigins("http://localhost:3000"));
             });
 
+            services.AddDbContext<Narudzba_ProizvodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
             services.AddDbContext<ProizvodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
             services.AddDbContext<Popust_KodoviDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
             services.AddDbContext<NarudzbaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
