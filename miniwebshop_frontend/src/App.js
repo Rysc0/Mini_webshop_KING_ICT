@@ -12,15 +12,33 @@ function App() {
     const [data, setData] = useState([]);
     const [podaci, setPodaci] = useState([]);
     const items = [];
-
+    const [itemID, setitemID] = useState();
+    const [promjena, setpromjena] = useState(0);
 
     // useEffect(() => {
     //    setPodaci(items);        
-    // }, []);
+    // }, [items.length]);
         
     const handleKosarica = (event) => {
         const value = parseInt(event.currentTarget.value);
-        const novi_data = data.find(data => (data.id === value));
+        setitemID(value);
+        // ovo ide na add
+        // const novi_data = data.find(data => (data.id === value));
+        // console.log("novi data: ", novi_data);
+        // if(novi_data.kolicina > 0){
+        //     items.push(novi_data);
+        //     // radi
+        //     setPodaci(items);
+        //     // podaci.push(novi_data);
+        // }
+        // else console.log("OUT OF STOCK: ", {novi_data});
+        // // setPodaci(items);
+        // // setData1(novi_data);
+        // console.log("items:", podaci);
+    }
+
+    const dodajItem = (event) => {
+        const novi_data = data.find(data => (data.id === itemID));
         console.log("novi data: ", novi_data);
         if(novi_data.kolicina > 0){
             items.push(novi_data);
@@ -31,7 +49,24 @@ function App() {
         else console.log("OUT OF STOCK: ", {novi_data});
         // setPodaci(items);
         // setData1(novi_data);
-        console.log("items:", podaci);
+        setpromjena(3);
+        console.log("podaci:", podaci);
+        console.log("items:", items);
+    }
+
+    const ukloniItem = (event) => {
+        const index = items.indexOf((item) => item.id === itemID);
+        // console.log("itemID=", itemID);
+        // console.log("index=", index);
+        
+        items.splice(index+2,1);
+        console.log("itemID=", itemID);
+        console.log("index=", index);
+        setPodaci(items);
+        console.log("podaci:", podaci);
+        console.log("items:", items);
+        setpromjena(2);
+        
     }
 
     //  dohvaćanje podataka sa API-a
@@ -73,6 +108,8 @@ function App() {
                 <br></br>
                 <label>ID proizvoda</label>
                 <input type="number" onChange={handleKosarica} ></input>
+                <button onClick={dodajItem}>Dodaj</button>
+                <button onClick={ukloniItem}>Ukloni</button>
                 
                 {/* <Kosarica>
                         {items.map((item) => (
