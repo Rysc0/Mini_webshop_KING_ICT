@@ -109,6 +109,7 @@ function App() {
         dohvatiSveKupone();
         const trazeni = sviPopusti.find(sviPopusti => (sviPopusti.kod == uneseniKod));
         console.log("trazeni", trazeni);
+        settrazeni_kupon(trazeni);
         
         //  linija 115 i 116 iz nekog razloga blokiraju i baca mi error: Cannot read property 'iskoristen' of undefined
         // detaljni opis kako ovo zaobić je u readMe.md-u
@@ -120,6 +121,45 @@ function App() {
         }
     }
 
+
+    function NarudzbaPost(){
+        const narudzba = { 
+            "id": 0,
+            "datum": "2021-07-26T12:20:22.229Z",
+            "ukupna_Cijena_Bez_P": 555,
+            "ukupna_Cijena_S_P": 66,
+            "kod_Za_Popust_ID": 1,
+            "nacin_Placanja_ID": 2,
+            "broj_Kartice": "",
+            "email": "jhfghj",
+            "broj_Mobitela": "gfdsgds",
+            "adresa_Dostave": "gsdfg",
+            "napomena": ""
+        };
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({title: 'Narudzba'})
+        }
+        return(
+            fetch("https://localhost:44358/api/Narudzbas", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(narudzba)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Uspjesan post:", narudzba);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            })
+        )
+    }
+    const handleNaruci = (event) => {
+        NarudzbaPost();
+    }
 
 
     return (
@@ -170,13 +210,8 @@ function App() {
                     <label>Iznos bez popusta:  {cijena}kn</label>
                     <br></br>
                     <label>Iznos sa popustom:  {(cijena - (cijena*popust)).toFixed(2)}kn</label>
-            </div>
-            
-
-            
-            {/* ovdje naručivanje */}
-            <div>
-                <h3>Narudžba</h3>
+                    <br></br>
+                    <button onClick={handleNaruci}>Naruči</button>
             </div>
         </div>
     );
