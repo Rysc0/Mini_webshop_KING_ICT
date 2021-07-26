@@ -33,6 +33,9 @@ function App() {
     const [BrojMobitela, setBrojMobitela] = useState();
     const [Adresa, setAdresa] = useState();
     const [Napomena, setNapomena] = useState();
+    const [NarudzbaID, setNarudzbaID] = useState();
+    const [SveNarudzbe, setSveNarudzbe] = useState([]);
+    const [LastOrderID, setLastOrderID] = useState();
 
     
 
@@ -176,6 +179,47 @@ function App() {
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`
         }
 
+    function GetLastOrderID(){
+        const reversaniArray = SveNarudzbe.sort().reverse();
+        console.log("obrnute narudzbe", reversaniArray);
+        const id = SveNarudzbe[0].id +2;
+        console.log("id zadnje narudzbe:",id);
+        setLastOrderID(id);
+    }
+
+    function GetAllOrders(){
+        fetch("https://localhost:44358/api/Narudzbas")
+        .then(response => response.json())
+        .then(data => {
+            console.log("sve narudzbe", data);
+            setSveNarudzbe(data);
+        })
+    }
+
+    function ProizvodiNaNarudzbiPost(){
+        GetAllOrders();
+        GetLastOrderID();
+        const zapis = {
+            "id": 0,
+            "narudzba_ID": LastOrderID+1,
+            "proizvod_ID": itemID
+        }
+        return(
+            fetch("https://localhost:44358/api/Narudzba_Proizvod", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(zapis)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Uspjesan post:", zapis);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            })
+        )
+    }
+    
     function NarudzbaPost(){
         const dd = getCurrentDate().toString();
         // const cijena_s_popustom = 0;
@@ -242,6 +286,7 @@ function App() {
     }
     const handleNaruci = (event) => {
         NarudzbaPost();
+        ProizvodiNaNarudzbiPost();
     }
 
 
