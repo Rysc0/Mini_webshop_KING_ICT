@@ -14,27 +14,44 @@ function App() {
     const items = [];
     const [itemID, setitemID] = useState();
     const [promjena, setpromjena] = useState(0);
+    const [cijena, setcijena] = useState(0);
+    // ID kupona koji je unesen
+    const [kuponID, setKuponID] = useState(0);
+    // tekst koda
+    const [uneseniKod, setuneseniKod] = useState();
+    // iznos popusta
+    const [popust, setPopust] = useState(0);
+    // dohvaćeni svi popusti
+    const [sviPopusti, setsviPopusti] = useState([]);
+    // kupon koji se trazio
+    const [trazeni_kupon, settrazeni_kupon] = useState();
+
+    
+
+
+    // const popust = 30;
+    // const kupon = "isus";
+
 
     // useEffect(() => {
     //    setPodaci(items);        
     // }, [items.length]);
+
+    //  dohvaćanje podataka sa API-a
+    useEffect(() => {
+        fetch("https://localhost:44358/api/Proizvods")
+            .then(reponse => reponse.json())
+            .then(data => {
+                console.log(data);
+                setData(data);
+                //  radi
+                // console.log(data.find(data => (data.id === 3)));
+            });
+    }, [])
         
     const handleKosarica = (event) => {
         const value = parseInt(event.currentTarget.value);
         setitemID(value);
-        // ovo ide na add
-        // const novi_data = data.find(data => (data.id === value));
-        // console.log("novi data: ", novi_data);
-        // if(novi_data.kolicina > 0){
-        //     items.push(novi_data);
-        //     // radi
-        //     setPodaci(items);
-        //     // podaci.push(novi_data);
-        // }
-        // else console.log("OUT OF STOCK: ", {novi_data});
-        // // setPodaci(items);
-        // // setData1(novi_data);
-        // console.log("items:", podaci);
     }
 
     const dodajItem = (event) => {
@@ -44,6 +61,8 @@ function App() {
             items.push(novi_data);
             // radi
             setPodaci(items);
+            setcijena(novi_data.cijena);
+            // console.log("na add", podaci);
             // podaci.push(novi_data);
         }
         else console.log("OUT OF STOCK: ", {novi_data});
@@ -65,21 +84,42 @@ function App() {
         setPodaci(items);
         console.log("podaci:", podaci);
         console.log("items:", items);
+        setcijena(0);
         setpromjena(2);
         
     }
 
-    //  dohvaćanje podataka sa API-a
-    useEffect(() => {
-        fetch("https://localhost:44358/api/Proizvods")
-            .then(reponse => reponse.json())
-            .then(data => {
-                console.log(data);
-                setData(data);
-                //  radi
-                // console.log(data.find(data => (data.id === 3)));
-            });
-    }, [])
+    const handlePopustKod = (event) => {
+        const kod = event.currentTarget.value;
+        console.log("ovo je handlePopustKod:",kod);
+        setuneseniKod(kod);
+    }
+
+    function dohvatiSveKupone(){
+        return(
+        fetch("https://localhost:44358/api/Popust_Kodovi")
+        .then(reponse => reponse.json())
+        .then(kupon => {
+            console.log("ovo su svi popusti:",kupon);
+            setsviPopusti(kupon);
+        }));
+    }
+
+    const handleKupon = (event) => {
+        dohvatiSveKupone();
+        const trazeni = sviPopusti.find(sviPopusti => (sviPopusti.kod == uneseniKod));
+        console.log("trazeni", trazeni);
+        
+        //  linija 115 i 116 iz nekog razloga blokiraju i baca mi error: Cannot read property 'iskoristen' of undefined
+        // detaljni opis kako ovo zaobić je u readMe.md-u
+        // console.log("iskoristen", trazeni.iskoristen);
+        if(trazeni.iskoristen === false){
+            console.log("vidis da mozes citat", trazeni.popust);
+            setPopust(trazeni.popust);
+
+        }
+    }
+
 
 
     return (
@@ -111,20 +151,29 @@ function App() {
                 <button onClick={dodajItem}>Dodaj</button>
                 <button onClick={ukloniItem}>Ukloni</button>
                 
-                {/* <Kosarica>
-                        {items.map((item) => (
-                            <Proizvod_U_Kosarici key={item.id} {...item}></Proizvod_U_Kosarici>
-                        ))}
-                    </Kosarica> */}
+
             </div>
  
-            <Table >
-                {podaci.map((item) => (
-                    <Proizvod key={item} {...item}></Proizvod>
-                ))}
-            </Table>
+            <div>
+                <Table >
+                    {podaci.map((item) => (
+                        <Proizvod key={item} {...item}></Proizvod>
+                    ))}
+                </Table>
+                <br></br>
+                    <label>Popust kod: </label>
+                    <input type="text" onChange={handlePopustKod}></input>
+                    <button onClick={handleKupon}>Provjeri</button>
+                    <br></br>     
+                    <label>Popust: {popust*100}%</label>    
+                    <br></br>           
+                    <label>Iznos bez popusta:  {cijena}kn</label>
+                    <br></br>
+                    <label>Iznos sa popustom:  {(cijena - (cijena*popust)).toFixed(2)}kn</label>
+            </div>
+            
 
-
+            
             {/* ovdje naručivanje */}
             <div>
                 <h3>Narudžba</h3>
