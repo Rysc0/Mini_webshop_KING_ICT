@@ -34,7 +34,7 @@ namespace MiniWebShop
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                     builder => 
-                        builder.WithOrigins("http://localhost:3000"));
+                        builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());
             });
 
             services.AddDbContext<Narudzba_ProizvodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
