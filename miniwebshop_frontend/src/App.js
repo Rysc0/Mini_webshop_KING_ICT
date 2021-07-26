@@ -108,33 +108,56 @@ function App() {
     const handleKupon = (event) => {
         dohvatiSveKupone();
         const trazeni = sviPopusti.find(sviPopusti => (sviPopusti.kod == uneseniKod));
+        
         console.log("trazeni", trazeni);
         settrazeni_kupon(trazeni);
+        setKuponID(trazeni.id);
         
-        //  linija 115 i 116 iz nekog razloga blokiraju i baca mi error: Cannot read property 'iskoristen' of undefined
+        // iz nekog razloga blokiraju i baca mi error: Cannot read property 'iskoristen' of undefined
         // detaljni opis kako ovo zaobić je u readMe.md-u
-        // console.log("iskoristen", trazeni.iskoristen);
+        console.log("iskoristen", trazeni.iskoristen); // ovo radi problem
         if(trazeni.iskoristen === false){
             console.log("vidis da mozes citat", trazeni.popust);
             setPopust(trazeni.popust);
+        
 
         }
     }
 
+    function getCurrentDate(separator='-'){
+
+        let newDate = new Date()
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        
+        return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`
+        }
 
     function NarudzbaPost(){
+        const dd = getCurrentDate().toString();
+        // const cijena_s_popustom = 0;
+        // if(popust == 0 && cijena > 0){
+        //     cijena_s_popustom = cijena;
+        // }
+        // else{
+        //     cijena_s_popustom = (cijena - (cijena*popust)).toFixed(2);
+        // }
+        const cijena_s_popustom = (cijena - (cijena*popust)).toFixed(2);
+        
+
         const narudzba = { 
             "id": 0,
-            "datum": "2021-07-26T12:20:22.229Z",
-            "ukupna_Cijena_Bez_P": 555,
-            "ukupna_Cijena_S_P": 66,
-            "kod_Za_Popust_ID": 1,
+            "datum": dd,
+            "ukupna_Cijena_Bez_P": cijena,
+            "ukupna_Cijena_S_P": cijena_s_popustom,
+            "kod_Za_Popust_ID": kuponID,
             "nacin_Placanja_ID": 2,
             "broj_Kartice": "",
-            "email": "jhfghj",
-            "broj_Mobitela": "gfdsgds",
-            "adresa_Dostave": "gsdfg",
-            "napomena": ""
+            "email": "sample@email.com",
+            "broj_Mobitela": "091 091 0911",
+            "adresa_Dostave": "adresa",
+            "napomena": "ovo je napomena"
         };
 
         const requestOptions = {
