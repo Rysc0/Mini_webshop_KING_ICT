@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import './App.css';
 import { Kosarica } from "./components/Kosarica";
 import { Proizvod_U_Kosarici } from "./components/Proizvod_U_Kosarici";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 
 
@@ -25,6 +26,13 @@ function App() {
     const [sviPopusti, setsviPopusti] = useState([]);
     // kupon koji se trazio
     const [trazeni_kupon, settrazeni_kupon] = useState();
+    // nacin placanja
+    const [placanje, setPlacanje] = useState(0);
+    const [brojKartice, setBrojKartice] = useState();
+    const [Email, setEmail] = useState();
+    const [BrojMobitela, setBrojMobitela] = useState();
+    const [Adresa, setAdresa] = useState();
+    const [Napomena, setNapomena] = useState();
 
     
 
@@ -89,10 +97,44 @@ function App() {
         
     }
 
+    const handleEmail = (event) => {
+        const email = event.currentTarget.value;
+        setEmail(email);
+    }
+
+    const handleBrojMobitela = (event) => {
+        const broj = event.currentTarget.value;
+        setBrojMobitela(broj);
+    }
+
+    const handleAdresa = (event) => {
+        const adresa = event.currentTarget.value;
+        setAdresa(adresa);
+    }
+
+    const handleNapomena = (event) => {
+        const napomena = event.currentTarget.value;
+        setNapomena(napomena);
+    }
+
+    const handleKarticno = (event) => {
+        setPlacanje(1);
+    }
+
+    const handleGotovinski = (event) => {
+        setPlacanje(2);
+    }
+
     const handlePopustKod = (event) => {
         const kod = event.currentTarget.value;
         console.log("ovo je handlePopustKod:",kod);
         setuneseniKod(kod);
+    }
+
+    const handleBrojKartice = (event) => {
+        const kartica = event.currentTarget.value;
+        console.log("broj kartice: ", kartica);
+        setBrojKartice(kartica);
     }
 
     function dohvatiSveKupone(){
@@ -115,7 +157,7 @@ function App() {
         
         // iz nekog razloga blokiraju i baca mi error: Cannot read property 'iskoristen' of undefined
         // detaljni opis kako ovo zaobić je u readMe.md-u
-        console.log("iskoristen", trazeni.iskoristen); // ovo radi problem
+        // console.log("iskoristen", trazeni.iskoristen); // ovo radi problem
         if(trazeni.iskoristen === false){
             console.log("vidis da mozes citat", trazeni.popust);
             setPopust(trazeni.popust);
@@ -145,20 +187,38 @@ function App() {
         // }
         const cijena_s_popustom = (cijena - (cijena*popust)).toFixed(2);
         
+        var narudzba = [];
+        if(placanje == 2){
+            narudzba = { 
+                "id": 0,
+                "datum": dd,
+                "ukupna_Cijena_Bez_P": cijena,
+                "ukupna_Cijena_S_P": cijena_s_popustom,
+                "kod_Za_Popust_ID": kuponID,
+                "nacin_Placanja_ID": placanje,
+                "broj_Kartice": "",
+                "email": Email,
+                "broj_Mobitela": BrojMobitela,
+                "adresa_Dostave": Adresa,
+                "napomena": Napomena
+            };
+        }
 
-        const narudzba = { 
-            "id": 0,
-            "datum": dd,
-            "ukupna_Cijena_Bez_P": cijena,
-            "ukupna_Cijena_S_P": cijena_s_popustom,
-            "kod_Za_Popust_ID": kuponID,
-            "nacin_Placanja_ID": 2,
-            "broj_Kartice": "",
-            "email": "sample@email.com",
-            "broj_Mobitela": "091 091 0911",
-            "adresa_Dostave": "adresa",
-            "napomena": "ovo je napomena"
-        };
+        else{
+            narudzba = { 
+                "id": 0,
+                "datum": dd,
+                "ukupna_Cijena_Bez_P": cijena,
+                "ukupna_Cijena_S_P": cijena_s_popustom,
+                "kod_Za_Popust_ID": kuponID,
+                "nacin_Placanja_ID": placanje,
+                "broj_Kartice": brojKartice,
+                "email": Email,
+                "broj_Mobitela": BrojMobitela,
+                "adresa_Dostave": Adresa,
+                "napomena": Napomena
+            };
+        }
 
         const requestOptions = {
             method: 'POST',
@@ -233,6 +293,23 @@ function App() {
                     <label>Iznos bez popusta:  {cijena}kn</label>
                     <br></br>
                     <label>Iznos sa popustom:  {(cijena - (cijena*popust)).toFixed(2)}kn</label>
+                    <br></br>
+                    <label>Odaberite način plaćanja: </label>
+                    <button onClick={handleKarticno}>Kartično</button>
+                    <button onClick={handleGotovinski}>Gotovinski</button>
+                    <br></br>
+                    <label>Broj kartice:</label>
+                    <input onChange={handleBrojKartice}></input>
+                    <br></br>
+                    <h6>(nije potrebno ako ste odabrali gotovinsko plaćanje)</h6>
+                    <label>Email:</label>
+                    <input onChange={handleEmail}></input>
+                    <label>Broj mobitela:</label>
+                    <input onChange={handleBrojMobitela}></input>
+                    <label>Adresa dostave:</label>
+                    <input onChange={handleAdresa}></input>
+                    <label>Napomena:</label>
+                    <input onChange={handleNapomena}></input>
                     <br></br>
                     <button onClick={handleNaruci}>Naruči</button>
             </div>
